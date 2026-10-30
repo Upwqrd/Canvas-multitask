@@ -12,7 +12,7 @@
 @@ -1800,3 +_,10 @@
 -                                this.player.stopUsingItem(); // CraftBukkit - SPIGOT-4706
 +                                boolean keepEating = this.player.isUsingItem()
-+                                    && hand != this.player.getUsedItemHand()
++                                    && itemInHand != this.player.getUseItem()
 +                                    && this.player.getUseItem().has(net.minecraft.core.component.DataComponents.FOOD)
 +                                    && (itemInHand.is(net.minecraft.world.item.Items.END_CRYSTAL)
 +                                        || itemInHand.getItem() instanceof net.minecraft.world.item.BlockItem);
@@ -21,6 +21,12 @@
 +                                }
                                  InteractionResult interactionResult = this.player.gameMode.useItemOn(this.player, serverLevel, itemInHand, hand, hitResult);
                                  if (interactionResult.consumesAction()) {
+@@ -2200,3 +_,4 @@
+-            if (this.player.getInventory().getSelectedSlot() != packet.getSlot() && this.player.getUsedItemHand() == InteractionHand.MAIN_HAND) {
++            if (this.player.getInventory().getSelectedSlot() != packet.getSlot() && this.player.getUsedItemHand() == InteractionHand.MAIN_HAND
++                && !(this.player.isUsingItem() && this.player.getUseItem().has(net.minecraft.core.component.DataComponents.FOOD))) {
+                 this.player.stopUsingItem();
+             }
 @@ -2410,7 +_,7 @@
          command = event.getMessage().substring(1);
          // CraftBukkit end
